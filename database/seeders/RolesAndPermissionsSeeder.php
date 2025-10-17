@@ -32,12 +32,15 @@ class RolesAndPermissionsSeeder extends Seeder
         $editor = Role::firstOrCreate(['name' => 'editor']);
         $author = Role::firstOrCreate(['name' => 'author']);
         $viewer = Role::firstOrCreate(['name' => 'viewer']);
+        $publish = Role::firstOrCreate(['name' => 'publish']);
 
         // Matrice rôles → permissions
         $admin->syncPermissions(Permission::all());
         $editor->syncPermissions(['posts.view', 'posts.create', 'posts.edit', 'posts.publish']);
         $author->syncPermissions(['posts.view', 'posts.create', 'posts.edit']);
         $viewer->syncPermissions(['posts.view']);
+        $publish->syncPermissions(['posts.publish']);
+
 
         // Rafraîchir le cache des permissions
         app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();

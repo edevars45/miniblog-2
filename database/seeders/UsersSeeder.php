@@ -13,32 +13,37 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-
         $users = [
             [
-                'email' => 'hello@miniblog.test',
-                'name' => 'sofiane',
+                'email' => 'devarsesther@gmail.com',
+                'name' => 'esther',
                 'password' => '123456789',
-                'role' => 'admin'
+                'role' => 'admin',
+            ],
+            [
+                'email' => 'hello@miniblog.test',
+                'name' => 'esther',
+                'password' => '123456789',
+                'role' => 'admin',
             ],
             [
                 'email' => 'titi@mail.com',
                 'name' => 'Titi Editor',
                 'password' => 'titititi',
-                'role' => 'editor'
+                'role' => 'editor',
             ],
             [
                 'email' => 'tata@mail.com',
                 'name' => 'Tata Author',
                 'password' => 'tatatata',
-                'role' => 'author'
+                'role' => 'author',
             ],
             [
                 'email' => 'tutu@mail.com',
                 'name' => 'Tutu Author',
                 'password' => 'tutututu',
-                'role' => 'viewer'
-            ]
+                'role' => 'publisher',
+            ],
         ];
 
         foreach ($users as $u) {
@@ -51,8 +56,8 @@ class UsersSeeder extends Seeder
                 ]
             );
 
+            // Requiert que les rôles existent déjà (Spatie)
             $newUser->syncRoles([$u['role']]);
         }
-
     }
 }

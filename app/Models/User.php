@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\Logger;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,8 +13,16 @@ class User extends Authenticatable
 {
     use HasRoles;
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Logger;
 
+
+    // (optionnel) log à la création
+    protected static function booted(): void
+    {
+        static::created(function ($user) {
+            $user->logInfo('Utilisateur créé', ['id' => $user->id, 'email' => $user->email]);
+        });
+    }
     /**
      * The attributes that are mass assignable.
      *

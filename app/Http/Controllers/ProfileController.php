@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Traits\Logger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
+
 {
+      use Logger;  //on “branche” le trait ici
     /**
      * Display the user's profile form.
      */
