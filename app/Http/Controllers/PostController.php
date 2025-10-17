@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
+
 class PostController extends Controller
 {
     /**
@@ -12,7 +13,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+           $posts = Post::with('user')
+        ->where('status', 'published')
+        ->orderByDesc('published_at')
+        ->paginate(10);
+
+    return view('posts.public-index', compact('posts'));
     }
 
     /**

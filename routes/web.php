@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+
+Route::get('/', [PostController::class, 'publicIndex'])->name('home');
 
 Route::get('/', function () {
     return view('welcome');
