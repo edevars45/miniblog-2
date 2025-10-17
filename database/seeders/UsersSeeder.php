@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,7 +31,7 @@ class UsersSeeder extends Seeder
                 'email' => 'titi@mail.com',
                 'name' => 'Titi Editor',
                 'password' => 'titititi',
-                'role' => 'editor',
+                'role' => 'admin',
             ],
             [
                 'email' => 'tata@mail.com',
@@ -42,7 +43,7 @@ class UsersSeeder extends Seeder
                 'email' => 'tutu@mail.com',
                 'name' => 'Tutu Author',
                 'password' => 'tutututu',
-                'role' => 'publisher',
+                'role' => 'viewer',
             ],
         ];
 
@@ -59,5 +60,7 @@ class UsersSeeder extends Seeder
             // Requiert que les rôles existent déjà (Spatie)
             $newUser->syncRoles([$u['role']]);
         }
+         // ⬇ Ajout : créer 6 articles rattachés à cet utilisateur
+            Post::factory(6)->for($newUser)->create();
     }
 }
