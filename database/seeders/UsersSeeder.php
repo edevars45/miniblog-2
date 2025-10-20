@@ -45,6 +45,13 @@ class UsersSeeder extends Seeder
                 'password' => 'tutututu',
                 'role' => 'viewer',
             ],
+
+              [
+                'email' => 'toto@mail.com',
+                'name' => 'Toto Author',
+                'password' => 'totototo',
+                'role' => 'admin',
+            ],
         ];
 
         foreach ($users as $u) {

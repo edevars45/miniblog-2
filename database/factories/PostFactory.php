@@ -13,14 +13,14 @@ class PostFactory extends Factory
 
     public function definition(): array
     {
-        $title = $this->faker->sentence(6);
-        $published = $this->faker->boolean(60);
+        $title = $this->faker->sentence(6);  // titre aléatoire
+        $published = $this->faker->boolean(60);    // 60% de chances d’être publié
 
         return [
-            'user_id' => User::factory(),
+            'user_id' => User::factory(),     // associe un auteur
             'title' => $title,
             'slug' => Str::slug($title) . '-' . Str::random(5),
-            'body' => implode("\n\n", $this->faker->paragraphs(5)),
+            'body' => implode("\n\n", $this->faker->paragraphs(5)),    // slug unique-ish
             'status' => $published ? 'published' : 'draft',
             'published_at' => $published ? now()->subDays(rand(0, 30)) : null,
         ];

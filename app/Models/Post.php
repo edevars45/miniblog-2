@@ -18,6 +18,18 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    // Binding des routes par slug (/posts/{post:slug})
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    // (optionnel)  Post::published() pour filtrer les publiés
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
+
     // Génère un slug unique à partir du titre
     protected static function booted(): void
     {
@@ -28,6 +40,7 @@ class Post extends Model
         });
 
         static::updating(function (Post $post) {
+            // Si tu veux garder des URLs stables, commente ce bloc
             if ($post->isDirty('title')) {
                 $post->slug = static::uniqueSlug($post->title, $post->id);
             }
@@ -47,6 +60,7 @@ class Post extends Model
         ) {
             $slug = $base . '-' . $i++;
         }
+
         return $slug;
     }
 }
