@@ -14,7 +14,7 @@
             </a>
         @endcan
 
-        <div class="overflow-x-auto bg-white rounded shadow mt-4 mb-4">
+        <div class="overflow-x-auto bg-white rounded shadow mt-4 mb-4">
             <table class="w-full text-left">
                 <thead class="bg-gray-50">
                     <tr>
@@ -25,48 +25,59 @@
                     </tr>
                 </thead>
                 <tbody>
-                @forelse ($posts as $post)
-                    <tr class="border-t">
-                        <td class="px-4 py-2">{{ $post->title }}</td>
-                        <td class="px-4 py-2">{{ $post->user->name }}</td>
-                        <td class="px-4 py-2">
-                            @if($post->status === 'published')
-                                Publié @if($post->published_at) ({{ $post->published_at->format('d/m/Y') }}) @endif
-                            @else
-                                Brouillon
-                            @endif
-                        </td>
-                        <td class="px-4 py-2 space-x-2">
-                            @can('update', $post)
-                                <a href="{{ route('posts.edit', $post) }}" class="underline text-indigo-600">Éditer</a>
-                            @endcan
-
-                            @can('delete', $post)
-                                <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline"
-                                      onsubmit="return confirm('Supprimer cet article ?');">
-                                    @csrf @method('DELETE')
-                                    <button class="underline text-red-600">Supprimer</button>
-                                </form>
-                            @endcan
-
-                            @can('posts.publish')
-                                @if($post->status === 'draft')
-                                    <form action="{{ route('posts.publish', $post) }}" method="POST" class="inline">
-                                        @csrf
-                                        <button class="underline text-green-700">Publier</button>
-                                    </form>
+                    @forelse ($posts as $post)
+                        <tr class="border-t">
+                            <td class="px-4 py-2">{{ $post->title }}</td>
+                            <td class="px-4 py-2">{{ $post->user->name }}</td>
+                            <td class="px-4 py-2">
+                                @if ($post->status === 'published')
+                                    Publié @if ($post->published_at)
+                                        ({{ $post->published_at->format('d/m/Y') }})
+                                    @endif
                                 @else
-                                    <form action="{{ route('posts.unpublish', $post) }}" method="POST" class="inline">
-                                        @csrf
-                                        <button class="underline text-yellow-700">Dépublier</button>
-                                    </form>
+                                    Brouillon
                                 @endif
-                            @endcan
-                        </td>
-                    </tr>
-                @empty
-                    <tr><td class="px-4 py-6" colspan="4">Aucun article pour le moment.</td></tr>
-                @endforelse
+                            </td>
+                            <td class="px-4 py-2 space-x-2">
+                                @can('update', $post)
+                                    <a href="{{ route('posts.edit', $post) }}" class="underline text-indigo-600">Éditer</a>
+                                @endcan
+
+                                @can('delete', $post)
+                                    <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline"
+                                        onsubmit="return confirm('Supprimer cet article ?');">
+                                        @csrf @method('DELETE')
+                                        <button class="underline text-red-600">Supprimer</button>
+                                    </form>
+                                @endcan
+
+                                @if ($post->status === 'published')
+                                    <a href="{{ route('posts.public.show', $post->slug) }}"
+                                        class="underline text-gray-700" target="_blank" rel="noopener">
+                                        Voir en public ↗
+                                    </a>
+                                @endif
+
+                                @can('posts.publish')
+                                    @if ($post->status === 'draft')
+                                        <form action="{{ route('posts.publish', $post) }}" method="POST" class="inline">
+                                            @csrf
+                                            <button class="underline text-green-700">Publier</button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('posts.unpublish', $post) }}" method="POST" class="inline">
+                                            @csrf
+                                            <button class="underline text-yellow-700">Dépublier</button>
+                                        </form>
+                                    @endif
+                                @endcan
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td class="px-4 py-6" colspan="4">Aucun article pour le moment.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

@@ -29,6 +29,7 @@
                     @can('posts.publish')
                         <p>Vous pouvez publier des articles.</p>
                     @endcan
+                     
                 </div>
             </div>
         </div>

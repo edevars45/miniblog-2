@@ -8,6 +8,15 @@ use Illuminate\Auth\Access\Response;
 
 class PostPolicy
 {
+       public function view(?User $user, Post $post): bool
+    {
+        if ($post->status === 'published') {
+            return true;
+        }
+
+        return $user?->id === $post->user_id || $user?->hasRole(['editor','admin']);
+    }
+
     // Peut créer si permission
     public function create(User $user): bool
     {

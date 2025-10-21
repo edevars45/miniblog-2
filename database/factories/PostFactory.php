@@ -14,7 +14,7 @@ class PostFactory extends Factory
     public function definition(): array
     {
         $title = $this->faker->sentence(6);  // titre aléatoire
-        $published = $this->faker->boolean(60);    // 60% de chances d’être publié
+        $published = $this->faker->boolean(80);    // 60% de chances d’être publié
 
         return [
             'user_id' => User::factory(),     // associe un auteur

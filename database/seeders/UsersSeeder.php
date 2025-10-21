@@ -31,7 +31,7 @@ class UsersSeeder extends Seeder
                 'email' => 'titi@mail.com',
                 'name' => 'Titi Editor',
                 'password' => 'titititi',
-                'role' => 'admin',
+                'role' => 'editor',
             ],
             [
                 'email' => 'tata@mail.com',
@@ -46,7 +46,7 @@ class UsersSeeder extends Seeder
                 'role' => 'viewer',
             ],
 
-              [
+            [
                 'email' => 'toto@mail.com',
                 'name' => 'Toto Author',
                 'password' => 'totototo',
@@ -67,7 +67,7 @@ class UsersSeeder extends Seeder
             // Requiert que les rôles existent déjà (Spatie)
             $newUser->syncRoles([$u['role']]);
         }
-         // ⬇ Ajout : créer 6 articles rattachés à cet utilisateur
-            Post::factory(6)->for($newUser)->create();
+        // ⬇ Ajout : créer 6 articles rattachés à cet utilisateur
+        Post::factory(10)->for($newUser)->create();
     }
 }
