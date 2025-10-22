@@ -23,7 +23,7 @@ class UsersSeeder extends Seeder
             ],
             [
                 'email' => 'hello@miniblog.test',
-                'name' => 'esther',
+                'name' => 'Esther Admin',
                 'password' => '123456789',
                 'role' => 'admin',
             ],
@@ -41,14 +41,14 @@ class UsersSeeder extends Seeder
             ],
             [
                 'email' => 'tutu@mail.com',
-                'name' => 'Tutu Author',
+                'name' => 'Tutu Viewer',
                 'password' => 'tutututu',
                 'role' => 'viewer',
             ],
 
             [
                 'email' => 'toto@mail.com',
-                'name' => 'Toto Author',
+                'name' => 'Toto Admin',
                 'password' => 'totototo',
                 'role' => 'admin',
             ],

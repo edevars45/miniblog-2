@@ -3,6 +3,8 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserRoleController;
+// use App\Http\Controllers\Admin\RoleController;
 
 /** FRONT (public) */
 // Accueil (liste publique)
@@ -32,6 +34,22 @@ Route::prefix('dashboard')
             ->middleware('permission:posts.publish');
         Route::post('/posts/{post}/unpublish', [PostController::class, 'unpublish'])->name('unpublish')
             ->middleware('permission:posts.publish');
+    });
+
+//groupe admin (autorisé aux admins ou aux détenteurs de `users.manage`) :
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth', 'verified', 'permission:users.manage']) // ou 'role:admin'
+    ->group(function () {
+        // Gestion des rôles assignés aux utilisateurs
+        Route::get('users', [UserRoleController::class, 'index'])->name('users.index');
+        Route::get('users/{user}/roles', [UserRoleController::class, 'edit'])->name('users.roles.edit');
+        Route::put('users/{user}/roles', [UserRoleController::class, 'update'])->name('users.roles.update');
+
+        // (optionnel) CRUD simple des rôles
+        // Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
+        // Route::post('roles', [RoleController::class, 'store'])->name('roles.store');
+        // Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
     });
 
 /** Dashboard / Profil / Admin / Auth */
